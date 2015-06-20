@@ -1,16 +1,3 @@
-/*
- TreeList.c
- 
- C code version of the great Tree-List recursion problem.
- See http://cslibrary.stanford.edu/109/ for the full
- discussion and the Java solution.
- 
- This code is free for any purpose.
- Feb 22, 2000
- Nick Parlante nick.parlante@cs.stanford.edu
- */
-
-
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -124,8 +111,6 @@ void inOrder(Node node)
     
     inOrder(node->right);
 }
-
-    /* Demo that the code works */
     int main() {
         Node root = NULL;
         Node head;
