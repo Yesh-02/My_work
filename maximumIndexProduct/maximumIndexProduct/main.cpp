@@ -4,7 +4,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-vector<long long int> arr(sizeof(long long int));
+vector<long long int> arr(sizeof());
 long long int findLeft(long long int i)
 {
     static long long int l_prev_val = 0;

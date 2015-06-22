@@ -10,6 +10,7 @@ struct Node
     long index;
     struct Node *next;
     struct Node *prev;
+    struct Node *rNext;
 }*head=NULL;
 struct Node* createNode(long long data)
 {
@@ -22,6 +23,7 @@ struct Node* createNode(long long data)
         nNode->index = new_ind;
         nNode->next = NULL;
         nNode->prev = NULL;
+        nNode->rNext = NULL;
         new_ind++;
         sHead=nNode;
         tail=nNode;
@@ -32,6 +34,7 @@ struct Node* createNode(long long data)
         nNode->index = new_ind;
         nNode->next = NULL;
         nNode->prev = NULL;
+        nNode->rNext = NULL;
         new_ind++;
         tail->next = nNode;
         nNode->prev = tail;
@@ -42,22 +45,35 @@ struct Node* createNode(long long data)
 long findLeft(struct Node *node)
 {
     static long prevl = 0;
-    int run = 1;
     long long cur_data = node->data;
     struct Node *temp = node;
-    //cout<<"L="<<cur_data<<endl;
-    temp=temp->prev;
-    if(node->data < temp->data && run !=1)
+    cout<<"L="<<cur_data<<endl;
+    if(node->rNext != NULL)
+        if(node->rNext->prev != NULL)
+            temp=node->rNext->prev;
+        else
+            return 0;
+    else
+        temp=temp->prev;
+    if(temp == NULL)
+    {
         return prevl;
+    }
+    else if(node->data < temp->data)
+    {
+        if(node->index == 2)
+            return 1;
+        return prevl;
+    }
     else if((node->data > temp->data && node->data < prevl))
         return prevl;
     while(temp != NULL)
     {
-        run=0;
         if(temp->data > cur_data)
         {
-            //cout<<"cur data:"<<cur_data<<' '<<"temp data:"<<temp->data<<endl;
+            cout<<"cur data:"<<cur_data<<' '<<"temp data:"<<temp->data<<endl;
             prevl = temp->index;
+            cout<<"L = "<<prevl<<endl;
             return prevl;
         }
         temp = temp->prev;
@@ -68,21 +84,24 @@ long findRight(struct Node *node)
 {
     long long cur_data = node->data;
     static long prevr = 0;
-    int run = 1;
-    //cout<<"R="<<cur_data<<endl;
+    cout<<"R="<<cur_data<<endl;
     struct Node *temp = node;
     temp=temp->next;
-    if(node->prev->data > node->data && run != 1)
+    if(node->prev == NULL)
+        NULL;
+    else if(node->prev->data > node->data)
         return prevr;
-    else if(node->data > node->prev->data && node->data < prevr)
+    else if(node->data > node->prev->data && node->data < prevr && node->index != 2)
         return prevr;
     while(temp != NULL)
     {
-        run=0;
         if(temp->data > cur_data)
         {
-            //cout<<"cur data:"<<cur_data<<' '<<"temp data:"<<temp->data<<endl;
+            cout<<"cur data:"<<cur_data<<' '<<"temp data:"<<temp->data<<endl;
             prevr = temp->index;
+            temp->rNext = node;
+            cout<<"R = "<<prevr<<endl;
+            cout<<temp->data<<"->"<<temp->rNext->data<<endl;
             return prevr;
         }
         temp = temp->next;
@@ -91,26 +110,34 @@ long findRight(struct Node *node)
 }
 long long findMaxIndexProd()
 {
-    long long max_prod = 0,prod = 1;
+    long long max_prod = 0,prod = 0;
     struct Node *temp = head;
-    if(temp->next != NULL)
-        temp = temp->next;
+    //if(temp->next != NULL)
+        //temp = temp->next;
     while(temp->next != NULL)
     {
-        //cout<<"pass:"<<temp->data<<endl;
+        cout<<"pass:"<<temp->data<<endl;
         long left,right;
-        left = findLeft(temp);
-        if(left != 0)
-            right = findRight(temp);
+        right = findRight(temp);
+        if(right != 0)
+        {
+            left = findLeft(temp);
+            prod = left*right;
+            temp=temp->next;
+        }
         else
-            right = 0;
-        //cout<<"max left = "<<left<<' '<<"MAx reight = "<<right<<endl;
-        prod = left*right;
-        //cout<<"prod = "<<prod<<endl;
+        {
+            temp=temp->next;
+            cout<<"end"<<endl<<endl<<endl;
+            continue;
+        }
+        cout<<"max left = "<<left<<' '<<"MAx reight = "<<right<<endl;
+        cout<<"prod = "<<prod<<endl;
         if(prod > max_prod)
             max_prod = prod;
-        //cout<<"Max prod = "<<max_prod<<endl;
-        temp=temp->next;
+        cout<<"Max prod = "<<max_prod<<endl;
+        cout<<"end"<<endl;
+        cout<<endl;
     }
     return max_prod;
 }
@@ -162,10 +189,10 @@ int main()
         count++;
         head=createNode(data);
     }
-    print();
-    head=alterList(head);
-    cout<<"end";
+    //print();
+    cout<<"read in "<<((double)clock() - t)/CLOCKS_PER_SEC<<endl;
+    //head=alterList(head);
     cout<<findMaxIndexProd()<<endl;
-    cout<<((double)clock() - t)/CLOCKS_PER_SEC;
+    cout<<"completed in "<<((double)clock() - t)/CLOCKS_PER_SEC;
     return 0;
 }
