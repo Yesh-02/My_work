@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 void signedRange(int size)
 {
     int bit = (8 * size) - 1 ;
