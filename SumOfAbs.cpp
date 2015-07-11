@@ -5,34 +5,41 @@
  problem statement link : https://www.hackerrank.com/contests/w16/challenges/sum-of-absolutes
  */
 
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <algorithm>
+#include<iostream>
 using namespace std;
-int A[100001];
-int Find(int L,int R)
+int arr[]={0},odd[]={0};
+string findOdd(int l,int r,int ocount,int size)
 {
-    int sum = 0;
-    for (int i = L ; i<= R; i++ )
+    int count=0;
+    for(int i=0;i<ocount;i++)
     {
-        sum = abs(sum + A[i]);
+        if(odd[i]>r)
+        {
+            printf(".");
+            break;
+        }
+        if(odd[i]>=l && odd[i]<=r)
+            count++;
     }
-    return sum;
+    if(count%2 == 0)
+        return "Even";
+    else
+        return "Odd";
 }
 int main() {
-    int N,Q,L,R;
-    cin>>N>>Q;
-    for(int i=0;i<N;i++)
-        cin>>A[i];
-    while(Q--)
+    int n,q,j=0;
+    cin>>n>>q;
+    for(int i=0;i<n;i++)
     {
-        cin>>L>>R;
-        if(Find(L-1,R-1)%2 == 0 )
-            cout<<"Even"<<endl;
-        else
-            cout<<"Odd"<<endl;
+        cin>>arr[i];
+        if(arr[i]%2!=0)
+            odd[j++]=i;
+    }
+    for(int i=0;i<q;i++)
+    {
+        int a,b;
+        cin>>a>>b;
+        cout<<findOdd(a-1,b-1,j,n)<<endl;
     }
     return 0;
 }
