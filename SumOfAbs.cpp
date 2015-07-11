@@ -7,17 +7,14 @@
 
 #include<iostream>
 using namespace std;
-int arr[]={0},odd[]={0};
+int arr[100000]={0},odd[100000]={0};
 string findOdd(int l,int r,int ocount,int size)
 {
     int count=0;
     for(int i=0;i<ocount;i++)
     {
         if(odd[i]>r)
-        {
-            printf(".");
             break;
-        }
         if(odd[i]>=l && odd[i]<=r)
             count++;
     }
