@@ -1,8 +1,7 @@
 #include<iostream>
 using namespace std;
-int returnNum(long int num=01450)
+int returnNum(long int num)
 {
-    cout<<num;
     long int tens=1,temp_mod=num,temp_div=num;
     if(num ==0)
         return 5;
