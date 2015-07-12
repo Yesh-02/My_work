@@ -46,34 +46,3 @@ int main() {
 }
 
 
-
-int noOfDel(char str[])
-{
-    int count=0,i=0,j=1;
-    while(str[j])
-    {
-        if(str[i]==str[j])
-        {
-            count++;
-            j++;
-        }
-        else
-        {
-            i=j;
-            j++;
-        }
-    }
-    return count;
-}
-int main() {
-    int t;
-    char str[100000];
-    while(t--)
-    {
-        scanf("%s",str);
-        printf("%d\n",noOfDel(str));
-    }
-    return 0;
-}
-
-
