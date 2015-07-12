@@ -48,7 +48,6 @@ void getMaxWidthRecur(struct node *root, int count[], int level)
 {
     if(root)
     {
-        
         getMaxWidthRecur(root->left, count, level+1);
         count[level]++;
         getMaxWidthRecur(root->right, count, level+1);
