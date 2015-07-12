@@ -10,10 +10,7 @@ int isPal(string str)
     while(i<=j)
     {
         if(str[i]!=str[j])
-        {
-          cout<<str[i]<<' '<<str[j]<<'\n';
-         return 0;
-        }
+            return 0;
         i++;
         j--;
     }
